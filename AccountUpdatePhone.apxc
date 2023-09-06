@@ -1,0 +1,29 @@
+public class AccountUpdatePhone implements Queueable{
+
+	List<Account> accountList=new List<Account>();
+
+	public AccountUpdatePhone(List<Account> accountList){
+		this.accountList=accList;
+	}
+	public void execute(QueueableContext ctx){
+		updateContact();
+	}
+	public void updateContact(){
+		List<Account> accList=[Select id,name,Phone,
+							  (Select id, phone from Contacts) 
+							  from account where id=:accountList];
+							  
+		List<Contact> contactList=new List<Contact>();
+		
+		for(Account accRecord:accList){
+			for(Contact conRecord:accRecord.contacts){
+				conRecord.Phone=accRecord.Phone;
+				contactList.add(conRecord);
+			}
+		}
+		update contactList;
+
+		
+
+	}
+}
